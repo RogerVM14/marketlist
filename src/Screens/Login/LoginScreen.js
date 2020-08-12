@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import Global from '../../../Global'
 import { showMessage } from "react-native-flash-message";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { UserContext } from '../../Context/UserContext';
+
 
 
 
@@ -11,10 +13,11 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-nativ
 export default function LoginScreen({ navigation }) {
 
     const url = Global.url;
-    const ErrorValues =  Global.ErrorValues;
+    const ErrorValues = Global.ErrorValues;
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    const [errorMessage, setErrorMessage] = useState(null);
+    //Usercontext
+    const [user, setUser] = useContext(UserContext);
 
     const handleLogin = (email, password) => {
 
@@ -22,8 +25,19 @@ export default function LoginScreen({ navigation }) {
             email: email,
             password: password
         })
-            .then((response) => {
-                console.log('Login');
+            .then(res => {
+                let { data } = res.data;
+                // let name = data.name;
+                // name = name.split(" ");
+                // name = name[0];
+
+                setUser({
+                    id: data._id,
+                    name: data.name,
+                    email: data.email,
+                    marketLists: data.marketLists,
+                })
+
                 navigation.navigate('Home')
                 if (Error != null) {
                     setErrorMessage(null)
@@ -46,51 +60,25 @@ export default function LoginScreen({ navigation }) {
                     if (!!error) {
                         showMessage({
                             message: 'Error en el usuario',
-                            description: response.data['error'] ,
+                            description: response.data['error'],
                             type: "danger",
                         });
                     }
                 }
 
 
-
-
-                // const Error = error.response.data['error']
-                // console.log(Error)
-                // setErrorMessage(Error)
             });
-
-        // .catch(function ({ response }) {
-
-        //     if (response) {
-        //         //console.log(response.data)
-        //         const { error, errors } = response.data;
-        //         if (!!errors) {
-
-        //             showMessage({
-        //                 message: 'Error en ' + ErrorValues[errors[0]['param']],
-        //                 description: errors[0]['msg'],
-        //                 type: "danger",
-        //             });
-        //         }
-        //         if (!!error) { console.log(response.data['error']); }
-        //     }
-        // });
-
-
 
     }
 
     return (
         <View style={styles.container}>
-            < View style={styles.errorMessage}>
+            {/* < View style={styles.errorMessage}>
                 {errorMessage && <Text style={styles.errorMessage}>{errorMessage}</Text>}
-            </View>
+            </View> */}
 
 
             < View style={styles.form}>
-
-
 
                 < View>
                     < Text style={styles.inputTitle}> Correo </Text>
@@ -172,7 +160,7 @@ const styles = StyleSheet.create({
     },
     button: {
         marginHorizontal: 30,
-        backgroundColor: "#e03e36",
+        backgroundColor: "#242463",
         borderRadius: 4,
         height: 52,
         alignItems: "center",
