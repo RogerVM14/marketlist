@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -53,5 +53,14 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Now-Black.otf</string>
+		<string>Now-Bold.otf</string>
+		<string>Now-Light.otf</string>
+		<string>SpaceGrotesk-Bold.otf</string>
+		<string>SpaceGrotesk-Light.otf</string>
+		<string>SpaceGrotesk-Medium.otf</string>
+	</array>
 </dict>
 </plist>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Global from '../../../Global';
+import Global from '../../Global';
 import axios from 'axios';
 import { showMessage } from "react-native-flash-message";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
@@ -30,7 +30,7 @@ export default function SignupScreen({ navigation }) {
         })
             .then((response) => {
                 console.log('Create account...');
-                navigation.navigate('Home')
+                navigation.navigate('Pager')
                 if (Error != null) {
                     setErrorMessage(null)
                 }
@@ -49,7 +49,12 @@ export default function SignupScreen({ navigation }) {
                             type: "danger",
                         });
                     }
-                    if (!!error) { console.log('tiene errores del lado del client'); }
+                    if (!!error) { 
+                        showMessage({
+                            message: error,
+                            type: "danger",
+                        });
+                     }
                 }
 
 
